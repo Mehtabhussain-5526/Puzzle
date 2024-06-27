@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 const Sizeinput = () => {
   const [entree, setEntree] = useState(false);
   const [size, setSize] = useState(0);
   const [arrayS, setArrayS] = useState([]);
   const [plainArray, setPlainArray] = useState([]);
   const [win, setWin] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const inputRef = useRef(null);
+
   let indexX;
   let x;
   let indexY;
@@ -16,15 +19,18 @@ const Sizeinput = () => {
       setArrayS([]);
       setSize(e.target.value);
     } else {
+      e.target.value = "";
       setEntree(false);
       setSize(0);
       setArrayS([]);
+      setClicked(false);
     }
   };
   const sqRoot = size * size;
   const seqencedArray = [];
   const shuffuledArray = [];
   const handleSuffuling = (e) => {
+    setClicked(true);
     e.preventDefault();
     if (entree == true) {
       for (let i = 1; i <= sqRoot; i++) {
@@ -42,7 +48,11 @@ const Sizeinput = () => {
     }
   };
   const handleClose = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
     setArrayS([]);
+    setClicked(false);
     return setWin(false);
   };
   const comp = () => {
@@ -67,6 +77,7 @@ const Sizeinput = () => {
             max={8}
             required
             placeholder="Enter a number"
+            ref={inputRef}
           />
           <input
             onClick={handleSuffuling}
@@ -78,16 +89,36 @@ const Sizeinput = () => {
       </div>
       <div
         id="main-div"
-        className={` ml-[28px] mr-[28px] border-8 border-[#F87171] rounded-md 
-        ${size < 2 && "py-[20px]"} ${
-          size == 2 && " grid grid-cols-2 grid-rows-2 gap-y-9 py-[20px]"
-        } ${size == 3 && " grid grid-cols-3 grid-rows-3 gap-y-9 py-[20px]"} ${
-          size == 4 && " grid grid-cols-4 grid-rows-4 gap-y-9 py-[20px]"
-        } ${size == 5 && " grid grid-cols-5 grid-rows-5 gap-y-9 py-[20px]"} ${
-          size == 6 && " grid grid-cols-6 grid-rows-6 gap-y-9 py-[20px]"
-        } ${size == 7 && " grid grid-cols-7 grid-rows-7 gap-y-9 py-[20px]"} ${
-          size == 8 && " grid grid-cols-8 grid-rows-8 gap-y-9 py-[20px]"
-        } ${size > 8 && "py-[20px]"}  `}
+        className={` ml-[28px] mr-[28px] border-8 border-[#F87171] rounded-md py-[20px]
+         ${
+           arrayS.length == 4 &&
+           clicked == true &&
+           " grid grid-cols-2 grid-rows-2 gap-y-9 "
+         } ${
+          arrayS.length == 9 &&
+          clicked == true &&
+          " grid grid-cols-3 grid-rows-3 gap-y-9 "
+        } ${
+          arrayS.length == 16 &&
+          clicked == true &&
+          " grid grid-cols-4 grid-rows-4 gap-y-9 "
+        } ${
+          arrayS.length == 25 &&
+          clicked == true &&
+          " grid grid-cols-5 grid-rows-5 gap-y-9 "
+        } ${
+          arrayS.length == 36 &&
+          clicked == true &&
+          " grid grid-cols-6 grid-rows-6 gap-y-9 "
+        } ${
+          arrayS.length == 49 &&
+          clicked == true &&
+          " grid grid-cols-7 grid-rows-7 gap-y-9 "
+        } ${
+          arrayS.length == 64 &&
+          clicked == true &&
+          " grid grid-cols-8 grid-rows-8 gap-y-9 "
+        } `}
       >
         {arrayS.map((data, index) => {
           return (
