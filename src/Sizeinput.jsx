@@ -19,11 +19,18 @@ const Sizeinput = () => {
       setArrayS([]);
       setSize(e.target.value);
     } else {
-      e.target.value = "";
       setEntree(false);
       setSize(0);
       setArrayS([]);
       setClicked(false);
+
+      if (e.target.value.toString() == "") {
+      } else {
+        e.target.value = ""
+        alert(
+          "Please only Enter number in between 2 and 8 \n   Must be higher or equal to 2 \n   Or must lesser or equal to 8"
+        );
+      }
     }
   };
   const sqRoot = size * size;
@@ -49,7 +56,7 @@ const Sizeinput = () => {
   };
   const handleClose = () => {
     if (inputRef.current) {
-      inputRef.current.value = '';
+      inputRef.current.value = "";
     }
     setArrayS([]);
     setClicked(false);
@@ -73,6 +80,7 @@ const Sizeinput = () => {
             className="border border-[#F87171] rounded-md w-80 p-[10px] shadow-lg"
             type="number"
             name="size"
+            size={1}
             min={2}
             max={8}
             required
